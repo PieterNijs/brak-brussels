@@ -1,0 +1,67 @@
+/**
+ * Typography
+ * Size metrics per text role. Desktop values are the default.
+ */
+
+:root {
+  /* Display */
+  --type-display-font-size: 64px;
+  --type-display-line-height: 72px;
+  --type-display-letter-spacing: -1.5px;
+
+  /* H1 */
+  --type-h1-font-size: 48px;
+  --type-h1-line-height: 56px;
+  --type-h1-letter-spacing: -0.5px;
+
+  /* H2 */
+  --type-h2-font-size: 36px;
+  --type-h2-line-height: 44px;
+  --type-h2-letter-spacing: 0;
+
+  /* H3 */
+  --type-h3-font-size: 24px;
+  --type-h3-line-height: 32px;
+  --type-h3-letter-spacing: 0;
+
+  /* Body */
+  --type-body-font-size: 16px;
+  --type-body-line-height: 24px;
+  --type-body-letter-spacing: 0;
+
+  /* Body SM */
+  --type-body-sm-font-size: 14px;
+  --type-body-sm-line-height: 20px;
+  --type-body-sm-letter-spacing: 0;
+
+  /* Caption */
+  --type-caption-font-size: 12px;
+  --type-caption-line-height: 16px;
+  --type-caption-letter-spacing: 0.2px;
+
+  /* Overline */
+  --type-overline-font-size: 11px;
+  --type-overline-line-height: 16px;
+  --type-overline-letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --type-display-font-size: 40px;
+    --type-display-line-height: 48px;
+    --type-display-letter-spacing: -1px;
+
+    --type-h1-font-size: 32px;
+    --type-h1-line-height: 40px;
+
+    --type-h2-font-size: 24px;
+    --type-h2-line-height: 32px;
+
+    --type-h3-font-size: 20px;
+    --type-h3-line-height: 28px;
+
+    --type-overline-font-size: 10px;
+    --type-overline-line-height: 14px;
+    --type-overline-letter-spacing: 1.5px;
+  }
+}

@@ -1,0 +1,19 @@
+/**
+ * Color Primitives
+ * Foundation palette — static values, no theme modes.
+ */
+
+:root {
+  --neutral-50: #f7f6f5;
+  --neutral-100: #f0efee;
+  --neutral-200: #e1dfdd;
+  --neutral-300: #c9c6c3;
+  --neutral-400: #ada9a6;
+  --neutral-500: #8e8a87;
+  --neutral-600: #6f6b68;
+  --neutral-700: #514e4b;
+  --neutral-800: #353331;
+  --neutral-900: #242220;
+  --neutral-950: #191715;
+  --white: #ffffff;
+}

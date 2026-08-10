@@ -1,0 +1,76 @@
+/**
+ * Text Styles
+ * Composed from typography tokens + Jost font family/weight.
+ */
+
+:root {
+  --font-family: 'Jost', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+}
+
+.text-display {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
+  font-size: var(--type-display-font-size);
+  line-height: var(--type-display-line-height);
+  letter-spacing: var(--type-display-letter-spacing);
+}
+
+.text-h1 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
+  font-size: var(--type-h1-font-size);
+  line-height: var(--type-h1-line-height);
+  letter-spacing: var(--type-h1-letter-spacing);
+}
+
+.text-h2 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
+  font-size: var(--type-h2-font-size);
+  line-height: var(--type-h2-line-height);
+  letter-spacing: var(--type-h2-letter-spacing);
+}
+
+.text-h3 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-h3-font-size);
+  line-height: var(--type-h3-line-height);
+  letter-spacing: var(--type-h3-letter-spacing);
+}
+
+.text-body {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-letter-spacing);
+}
+
+.text-body-sm {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-sm-font-size);
+  line-height: var(--type-body-sm-line-height);
+  letter-spacing: var(--type-body-sm-letter-spacing);
+}
+
+.text-caption {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-caption-font-size);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
+}
+
+.text-overline {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-overline-font-size);
+  line-height: var(--type-overline-line-height);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+}

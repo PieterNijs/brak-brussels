@@ -1,0 +1,31 @@
+/**
+ * Color Semantic
+ * Role-based tokens. Dark is the default theme.
+ * Switch theme via [data-theme="light"] on html or body.
+ */
+
+:root {
+  --background-primary: var(--neutral-950);
+  --background-secondary: var(--neutral-900);
+  --background-surface: var(--neutral-800);
+  --text-primary: var(--white);
+  --text-secondary: var(--neutral-300);
+  --text-tertiary: var(--neutral-500);
+  --border-default: var(--neutral-700);
+  --border-subtle: var(--neutral-800);
+  --accent-primary: var(--white);
+  --accent-muted: var(--neutral-200);
+}
+
+[data-theme='light'] {
+  --background-primary: var(--neutral-50);
+  --background-secondary: var(--neutral-100);
+  --background-surface: var(--white);
+  --text-primary: var(--neutral-950);
+  --text-secondary: var(--neutral-700);
+  --text-tertiary: var(--neutral-500);
+  --border-default: var(--neutral-200);
+  --border-subtle: var(--neutral-100);
+  --accent-primary: var(--neutral-950);
+  --accent-muted: var(--neutral-800);
+}
