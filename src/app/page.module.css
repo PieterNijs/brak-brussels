@@ -1,0 +1,19 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2px;
+}
+
+@media (min-width: 769px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.empty {
+  padding: var(--space-3xl) var(--space-lg);
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--type-body-font-size);
+  text-align: center;
+}

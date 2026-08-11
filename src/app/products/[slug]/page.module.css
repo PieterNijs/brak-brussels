@@ -1,0 +1,173 @@
+/* ─── Layout ─────────────────────────────────────────────────── */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 769px) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* ─── Image masonry ───────────────────────────────────────────── */
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+}
+
+@media (min-width: 769px) {
+  .imageGrid {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.imagePrimary {
+  grid-column: 1 / -1;
+  position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+@media (min-width: 769px) {
+  .imagePrimary {
+    grid-column: auto;
+  }
+}
+
+.imageSecondary {
+  position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+.img {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ─── Info panel ─────────────────────────────────────────────── */
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 769px) {
+  .info {
+    width: 450px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+/* ─── Info sections ──────────────────────────────────────────── */
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-lg);
+}
+
+/* ─── Sold label ─────────────────────────────────────────────── */
+
+.soldLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--background-inverted);
+  width: fit-content;
+}
+
+.soldText {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-caption-font-size);
+  line-height: var(--type-overline-line-height);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--text-inverted);
+  white-space: nowrap;
+}
+
+/* ─── Title & price ──────────────────────────────────────────── */
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-h3-font-size);
+  line-height: var(--type-h3-line-height);
+  letter-spacing: var(--type-h3-letter-spacing);
+  color: var(--text-primary);
+}
+
+.price {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--text-secondary);
+}
+
+/* ─── Description (Portable Text) ───────────────────────────── */
+
+.description {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--text-primary);
+}
+
+.description p {
+  margin-bottom: var(--space-md);
+}
+
+.description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Shipping CTA ───────────────────────────────────────────── */
+
+.ctaWrapper {
+  padding: 0 var(--space-lg) var(--space-xl);
+}
+
+.ctaBox {
+  background-color: var(--background-surface);
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.ctaText {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--text-secondary);
+}
+
+.ctaLink {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.ctaLink:hover {
+  color: var(--text-secondary);
+}

@@ -1,0 +1,73 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.thumbnail {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  padding: var(--space-md);
+}
+
+.image {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.soldLabel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--background-inverted);
+  width: fit-content;
+  z-index: 1;
+}
+
+.soldText {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--type-caption-font-size);
+  line-height: var(--type-overline-line-height);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--text-inverted);
+  white-space: nowrap;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xs);
+  width: 100%;
+  padding: var(--space-md) var(--space-xs) var(--space-xl);
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.price {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-sm-font-size);
+  line-height: var(--type-body-sm-line-height);
+  letter-spacing: var(--type-body-sm-letter-spacing);
+  color: var(--text-secondary);
+  width: 100%;
+}

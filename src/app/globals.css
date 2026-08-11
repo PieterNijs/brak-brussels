@@ -1,0 +1,21 @@
+@import '../../styles/tokens/index.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  font-family: 'Jost', sans-serif;
+  font-size: var(--type-body-font-size);
+  line-height: var(--type-body-line-height);
+}
+
+body {
+  min-height: 100vh;
+}
