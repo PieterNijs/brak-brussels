@@ -1,9 +1,20 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   background-color: var(--background-secondary);
   padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+}
+
+.hidden {
+  transform: translateY(-100%);
 }
 
 .logoLink {

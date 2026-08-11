@@ -19,3 +19,17 @@ html {
 body {
   min-height: 100vh;
 }
+
+/* Spacer that matches fixed header height so content is never hidden beneath it.
+   Desktop: space-3xl (64px) + logo (45px) + space-xl (32px) = 141px
+   Mobile:  space-3xl (48px) + logo (33.75px) + space-xl (24px) ≈ 106px */
+.header-spacer {
+  height: 141px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .header-spacer {
+    height: 106px;
+  }
+}

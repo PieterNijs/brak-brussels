@@ -24,6 +24,7 @@ export default function RootLayout({
     <html lang="en" className={jost.variable}>
       <body>
         <Header />
+        <div className="header-spacer" />
         <main>{children}</main>
         <Footer />
       </body>
