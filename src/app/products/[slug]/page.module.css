@@ -12,43 +12,6 @@
   }
 }
 
-/* ─── Image masonry ───────────────────────────────────────────── */
-
-.imageGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-}
-
-@media (min-width: 769px) {
-  .imageGrid {
-    flex: 1;
-    min-width: 0;
-  }
-}
-
-.imagePrimary {
-  grid-column: 1 / -1;
-  position: relative;
-  aspect-ratio: 3 / 4;
-}
-
-@media (min-width: 769px) {
-  .imagePrimary {
-    grid-column: auto;
-  }
-}
-
-.imageSecondary {
-  position: relative;
-  aspect-ratio: 3 / 4;
-}
-
-.img {
-  object-fit: cover;
-  pointer-events: none;
-}
-
 /* ─── Info panel ─────────────────────────────────────────────── */
 
 .info {
@@ -108,7 +71,7 @@
 
 .title {
   font-family: var(--font-family);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-light);
   font-size: var(--type-h3-font-size);
   line-height: var(--type-h3-line-height);
   letter-spacing: var(--type-h3-letter-spacing);

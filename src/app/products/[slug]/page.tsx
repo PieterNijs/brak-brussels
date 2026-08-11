@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { PortableText } from 'next-sanity'
 import { client } from '@/lib/sanity'
+import { ProductImages } from '@/components/ProductImages'
 import styles from './page.module.css'
 
 type Product = {
@@ -49,36 +49,10 @@ export default async function ProductPage({
 
   if (!product) notFound()
 
-  const [primaryImage, ...secondaryImages] = product.images ?? []
-
   return (
     <div className={styles.layout}>
-      {/* Image masonry */}
-      <div className={styles.imageGrid}>
-        {primaryImage && (
-          <div className={styles.imagePrimary}>
-            <Image
-              src={primaryImage}
-              alt={product.title}
-              fill
-              className={styles.img}
-              sizes="(max-width: 768px) 100vw, 60vw"
-              priority
-            />
-          </div>
-        )}
-        {secondaryImages.map((src, i) => (
-          <div key={src} className={styles.imageSecondary}>
-            <Image
-              src={src}
-              alt={`${product.title} ${i + 2}`}
-              fill
-              className={styles.img}
-              sizes="(max-width: 768px) 50vw, 30vw"
-            />
-          </div>
-        ))}
-      </div>
+      {/* Image masonry with lightbox */}
+      <ProductImages images={product.images ?? []} title={product.title} />
 
       {/* Product info */}
       <div className={styles.info}>

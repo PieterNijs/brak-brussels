@@ -1,0 +1,165 @@
+/* ─── Image grid ─────────────────────────────────────────────────── */
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+}
+
+@media (min-width: 769px) {
+  .imageGrid {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.imagePrimary {
+  grid-column: 1 / -1;
+  position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+@media (min-width: 769px) {
+  .imagePrimary {
+    grid-column: auto;
+  }
+}
+
+.imageSecondary {
+  position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+.img {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ─── Fullscreen trigger ─────────────────────────────────────────── */
+
+.fullscreenBtn {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.imagePrimary:hover .fullscreenBtn,
+.imageSecondary:hover .fullscreenBtn {
+  opacity: 1;
+}
+
+/* Always visible on touch devices */
+@media (max-width: 768px) {
+  .fullscreenBtn {
+    opacity: 1;
+  }
+}
+
+/* ─── Lightbox overlay ───────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.70);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImageWrapper {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  transition: transform 0.25s ease;
+  will-change: transform;
+}
+
+.lightboxImg {
+  object-fit: contain;
+}
+
+/* ─── Counter ────────────────────────────────────────────────────── */
+
+.counter {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family);
+  font-size: var(--type-caption-font-size);
+  letter-spacing: var(--type-overline-letter-spacing);
+  pointer-events: none;
+}
+
+/* ─── Close button ───────────────────────────────────────────────── */
+
+.closeBtn {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: var(--space-xs);
+  line-height: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}
+
+/* ─── Navigation arrows (desktop only) ──────────────────────────── */
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: var(--space-md);
+  line-height: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s;
+  display: none;
+}
+
+.navBtn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+@media (min-width: 769px) {
+  .navBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.prevBtn {
+  left: var(--space-xl);
+}
+
+.nextBtn {
+  right: var(--space-xl);
+}

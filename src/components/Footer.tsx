@@ -4,7 +4,7 @@ import styles from './Footer.module.css'
 const navLinks = [
   { label: 'Contact', href: '/contact' },
   { label: 'Shipping', href: '/shipping' },
-  { label: 'Instagram', href: 'https://instagram.com', external: true },
+  { label: 'Instagram', href: 'https://www.instagram.com/brak.brussels/', external: true },
   { label: 'Refund policy', href: '/refund-policy' },
   { label: 'Legal Notice', href: '/legal' },
 ]
