@@ -107,7 +107,17 @@ export function ProductImages({ images, title }: ProductImagesProps) {
     setZoomed((z) => !z)
   }
 
-  // Swipe — disabled while zoomed
+  // Touch pan while zoomed
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!zoomed || !imageWrapperRef.current) return
+    const rect = imageWrapperRef.current.getBoundingClientRect()
+    setOrigin({
+      x: ((e.touches[0].clientX - rect.left) / rect.width) * 100,
+      y: ((e.touches[0].clientY - rect.top) / rect.height) * 100,
+    })
+  }
+
+  // Swipe to navigate — only when not zoomed
   const handleTouchStart = (e: React.TouchEvent) => {
     if (zoomed) return
     touchStartX.current = e.touches[0].clientX
@@ -175,11 +185,13 @@ export function ProductImages({ images, title }: ProductImagesProps) {
             onClick={handleImageClick}
             onMouseMove={handleImageMouseMove}
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             style={{
               transform: zoomed ? 'scale(2.5)' : 'scale(1)',
               transformOrigin: `${origin.x}% ${origin.y}%`,
               cursor: zoomed ? 'zoom-out' : 'zoom-in',
+              touchAction: zoomed ? 'none' : 'auto',
             }}
           >
             <Image
@@ -190,13 +202,6 @@ export function ProductImages({ images, title }: ProductImagesProps) {
               sizes="100vw"
             />
           </div>
-
-          {/* Counter */}
-          {images.length > 1 && !zoomed && (
-            <span className={styles.counter}>
-              {activeIndex + 1} / {images.length}
-            </span>
-          )}
 
           {/* Close */}
           <button

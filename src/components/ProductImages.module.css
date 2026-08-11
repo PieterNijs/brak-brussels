@@ -82,28 +82,14 @@
 
 .lightboxImageWrapper {
   position: relative;
-  width: 90vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   transition: transform 0.25s ease;
   will-change: transform;
 }
 
 .lightboxImg {
   object-fit: contain;
-}
-
-/* ─── Counter ────────────────────────────────────────────────────── */
-
-.counter {
-  position: absolute;
-  bottom: var(--space-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.6);
-  font-family: var(--font-family);
-  font-size: var(--type-caption-font-size);
-  letter-spacing: var(--type-overline-letter-spacing);
-  pointer-events: none;
 }
 
 /* ─── Close button ───────────────────────────────────────────────── */
