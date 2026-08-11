@@ -8,9 +8,11 @@
   --background-primary: var(--neutral-950);
   --background-secondary: var(--neutral-900);
   --background-surface: var(--neutral-800);
+  --background-inverted: var(--neutral-100);
   --text-primary: var(--white);
   --text-secondary: var(--neutral-300);
   --text-tertiary: var(--neutral-500);
+  --text-inverted: var(--neutral-900);
   --border-default: var(--neutral-700);
   --border-subtle: var(--neutral-800);
   --accent-primary: var(--white);
@@ -21,9 +23,11 @@
   --background-primary: var(--neutral-50);
   --background-secondary: var(--neutral-100);
   --background-surface: var(--white);
+  --background-inverted: var(--neutral-800);
   --text-primary: var(--neutral-950);
   --text-secondary: var(--neutral-700);
   --text-tertiary: var(--neutral-500);
+  --text-inverted: var(--neutral-100);
   --border-default: var(--neutral-200);
   --border-subtle: var(--neutral-100);
   --accent-primary: var(--neutral-950);

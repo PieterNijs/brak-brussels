@@ -1,9 +1,11 @@
 /**
  * Spacing
  * Desktop values are the default. Mobile overrides at breakpoint.
+ * Breakpoints define the viewport range for each mode.
  */
 
 :root {
+  --space-3xs: 2px;
   --space-2xs: 4px;
   --space-xs: 8px;
   --space-sm: 12px;
@@ -14,10 +16,13 @@
   --space-3xl: 64px;
   --space-4xl: 96px;
   --space-5xl: 128px;
+  --breakpoint-min: 768px;
+  --breakpoint-max: 1600px;
 }
 
 @media (max-width: 768px) {
   :root {
+    --space-3xs: 1px;
     --space-2xs: 2px;
     --space-xs: 4px;
     --space-sm: 8px;

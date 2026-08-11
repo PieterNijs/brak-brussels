@@ -26,12 +26,12 @@
 
   /* Body */
   --type-body-font-size: 16px;
-  --type-body-line-height: 24px;
+  --type-body-line-height: 20px;
   --type-body-letter-spacing: 0;
 
   /* Body SM */
   --type-body-sm-font-size: 14px;
-  --type-body-sm-line-height: 20px;
+  --type-body-sm-line-height: 18px;
   --type-body-sm-letter-spacing: 0;
 
   /* Caption */
@@ -40,9 +40,9 @@
   --type-caption-letter-spacing: 0.2px;
 
   /* Overline */
-  --type-overline-font-size: 11px;
+  --type-overline-font-size: 13px;
   --type-overline-line-height: 16px;
-  --type-overline-letter-spacing: 2px;
+  --type-overline-letter-spacing: 3px;
 }
 
 @media (max-width: 768px) {
@@ -60,8 +60,8 @@
     --type-h3-font-size: 20px;
     --type-h3-line-height: 28px;
 
-    --type-overline-font-size: 10px;
+    --type-overline-font-size: 11px;
     --type-overline-line-height: 14px;
-    --type-overline-letter-spacing: 1.5px;
+    --type-overline-letter-spacing: 2px;
   }
 }
