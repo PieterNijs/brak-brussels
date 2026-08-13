@@ -66,7 +66,7 @@ export default async function ProductPage({
           <div className={styles.titleGroup}>
             <h1 className={styles.title}>{product.title}</h1>
             {product.price !== undefined && (
-              <p className={styles.price}>€ {product.price}</p>
+              <p className={`${styles.price}${product.sold ? ' ' + styles.priceSold : ''}`}>€ {product.price}</p>
             )}
           </div>
         </div>

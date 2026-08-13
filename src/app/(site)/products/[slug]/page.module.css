@@ -134,3 +134,7 @@
 .ctaLink:hover {
   color: var(--text-secondary);
 }
+
+.priceSold {
+  text-decoration: line-through;
+}

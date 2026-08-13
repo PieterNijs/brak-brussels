@@ -77,7 +77,7 @@ export function ProductCard({
       </div>
       <div className={styles.details}>
         <p className={styles.title}>{title}</p>
-        {price !== undefined && <p className={styles.price}>€ {price}</p>}
+        {price !== undefined && <p className={`${styles.price}${sold ? ' ' + styles.priceSold : ''}`}>€ {price}</p>}
       </div>
     </Link>
   )

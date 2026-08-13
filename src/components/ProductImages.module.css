@@ -17,6 +17,12 @@
   grid-column: 1 / -1;
   position: relative;
   aspect-ratio: 3 / 4;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  width: 100%;
 }
 
 @media (min-width: 769px) {
@@ -28,6 +34,12 @@
 .imageSecondary {
   position: relative;
   aspect-ratio: 3 / 4;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  width: 100%;
 }
 
 .img {
@@ -35,17 +47,14 @@
   pointer-events: none;
 }
 
-/* ─── Fullscreen trigger ─────────────────────────────────────────── */
+/* ─── Fullscreen icon (decorative, parent div is the click target) ── */
 
-.fullscreenBtn {
+.fullscreenIcon {
   position: absolute;
   top: var(--space-md);
   left: var(--space-md);
   z-index: 1;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+  pointer-events: none;
   color: #fff;
   display: flex;
   align-items: center;
@@ -56,14 +65,14 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
-.imagePrimary:hover .fullscreenBtn,
-.imageSecondary:hover .fullscreenBtn {
+.imagePrimary:hover .fullscreenIcon,
+.imageSecondary:hover .fullscreenIcon {
   opacity: 1;
 }
 
 /* Always visible on touch devices */
 @media (max-width: 768px) {
-  .fullscreenBtn {
+  .fullscreenIcon {
     opacity: 1;
   }
 }

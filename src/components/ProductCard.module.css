@@ -71,3 +71,7 @@
   color: var(--text-secondary);
   width: 100%;
 }
+
+.priceSold {
+  text-decoration: line-through;
+}

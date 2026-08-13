@@ -137,7 +137,11 @@ export function ProductImages({ images, title }: ProductImagesProps) {
       {/* ── Image grid ── */}
       <div className={styles.imageGrid}>
         {primaryImage && (
-          <div className={styles.imagePrimary}>
+          <button
+            className={styles.imagePrimary}
+            onClick={() => openLightbox(0)}
+            aria-label="Open fullscreen"
+          >
             <Image
               src={primaryImage}
               alt={title}
@@ -146,17 +150,18 @@ export function ProductImages({ images, title }: ProductImagesProps) {
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />
-            <button
-              className={styles.fullscreenBtn}
-              onClick={() => openLightbox(0)}
-              aria-label="Open fullscreen"
-            >
+            <span className={styles.fullscreenIcon} aria-hidden="true">
               <FullscreenIcon />
-            </button>
-          </div>
+            </span>
+          </button>
         )}
         {secondaryImages.map((src, i) => (
-          <div key={src} className={styles.imageSecondary}>
+          <button
+            key={src}
+            className={styles.imageSecondary}
+            onClick={() => openLightbox(i + 1)}
+            aria-label={`Open image ${i + 2} fullscreen`}
+          >
             <Image
               src={src}
               alt={`${title} ${i + 2}`}
@@ -164,14 +169,10 @@ export function ProductImages({ images, title }: ProductImagesProps) {
               className={styles.img}
               sizes="(max-width: 768px) 50vw, 30vw"
             />
-            <button
-              className={styles.fullscreenBtn}
-              onClick={() => openLightbox(i + 1)}
-              aria-label="Open fullscreen"
-            >
+            <span className={styles.fullscreenIcon} aria-hidden="true">
               <FullscreenIcon />
-            </button>
-          </div>
+            </span>
+          </button>
         ))}
       </div>
 

@@ -10,7 +10,7 @@ type Props = {
 }
 
 const navItems = [
-  { label: 'Home', href: '/' },
+  { label: 'Products', href: '/' },
   { label: 'Contact', href: '/contact' },
   { label: 'Shipping', href: '/shipping' },
   { label: 'Refund policy', href: '/refund-policy' },
@@ -36,18 +36,19 @@ export function NavDrawer({ isOpen, onClose }: Props) {
 
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className={`${styles.backdrop} ${isOpen ? styles.backdropVisible : ''}`}
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      {/* Backdrop — only in DOM when open so it never intercepts taps */}
+      {isOpen && (
+        <div
+          className={styles.backdrop}
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
 
-      {/* Drawer panel */}
+      {/* Drawer panel — always in DOM so CSS transition plays */}
       <nav
         className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`}
         aria-label="Main navigation"
-        aria-hidden={!isOpen}
       >
         {/* Close button — matches header layout */}
         <div className={styles.drawerHeader}>

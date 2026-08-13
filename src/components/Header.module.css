@@ -9,12 +9,11 @@
   justify-content: space-between;
   background-color: var(--background-secondary);
   padding: var(--space-3xl) var(--space-lg) var(--space-xl);
-  transform: translateY(0);
-  transition: transform 0.3s ease-out;
+  transition: top 0.3s ease-out;
 }
 
 .hidden {
-  transform: translateY(-100%);
+  top: -200px;
 }
 
 .logoLink {
