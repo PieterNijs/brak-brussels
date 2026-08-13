@@ -4,8 +4,6 @@ export const siteSettings = defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  // Only ever one document of this type
-  __experimental_actions: ['update', 'publish'],
   fields: [
     defineField({
       name: 'siteName',
