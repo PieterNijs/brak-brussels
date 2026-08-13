@@ -51,7 +51,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   const touchStartX = useRef(0)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
 
-  const [primaryImage, ...secondaryImages] = images
+  const [img0, img1, img2, ...restImages] = images
 
   const openLightbox = (index: number) => {
     setActiveIndex(index)
@@ -135,45 +135,96 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   return (
     <>
       {/* ── Image grid ── */}
-      <div className={styles.imageGrid}>
-        {primaryImage && (
-          <button
-            className={styles.imagePrimary}
-            onClick={() => openLightbox(0)}
-            aria-label="Open fullscreen"
-          >
-            <Image
-              src={primaryImage}
-              alt={title}
-              fill
-              className={styles.img}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-            <span className={styles.fullscreenIcon} aria-hidden="true">
-              <FullscreenIcon />
-            </span>
-          </button>
+      <div className={styles.imageContainer}>
+
+        {/* Hero row: big image left + 2 stacked right */}
+        <div className={styles.heroRow}>
+          {img0 && (
+            <button
+              className={styles.heroMain}
+              onClick={() => openLightbox(0)}
+              aria-label="Open fullscreen"
+            >
+              <Image
+                src={img0}
+                alt={title}
+                fill
+                className={styles.img}
+                sizes="(max-width: 768px) 100vw, 45vw"
+                priority
+              />
+              <span className={styles.fullscreenIcon} aria-hidden="true">
+                <FullscreenIcon />
+              </span>
+            </button>
+          )}
+          {(img1 || img2) && (
+            <div className={styles.heroSide}>
+              {img1 && (
+                <button
+                  className={styles.heroSmall}
+                  onClick={() => openLightbox(1)}
+                  aria-label="Open image 2 fullscreen"
+                >
+                  <Image
+                    src={img1}
+                    alt={`${title} 2`}
+                    fill
+                    className={styles.img}
+                    sizes="(max-width: 768px) 50vw, 22vw"
+                  />
+                  <span className={styles.fullscreenIcon} aria-hidden="true">
+                    <FullscreenIcon />
+                  </span>
+                </button>
+              )}
+              {img2 && (
+                <button
+                  className={styles.heroSmall}
+                  onClick={() => openLightbox(2)}
+                  aria-label="Open image 3 fullscreen"
+                >
+                  <Image
+                    src={img2}
+                    alt={`${title} 3`}
+                    fill
+                    className={styles.img}
+                    sizes="(max-width: 768px) 50vw, 22vw"
+                  />
+                  <span className={styles.fullscreenIcon} aria-hidden="true">
+                    <FullscreenIcon />
+                  </span>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Remaining images: 2 per row */}
+        {restImages.length > 0 && (
+          <div className={styles.restGrid}>
+            {restImages.map((src, i) => (
+              <button
+                key={src}
+                className={styles.restImage}
+                onClick={() => openLightbox(i + 3)}
+                aria-label={`Open image ${i + 4} fullscreen`}
+              >
+                <Image
+                  src={src}
+                  alt={`${title} ${i + 4}`}
+                  fill
+                  className={styles.img}
+                  sizes="(max-width: 768px) 50vw, 30vw"
+                />
+                <span className={styles.fullscreenIcon} aria-hidden="true">
+                  <FullscreenIcon />
+                </span>
+              </button>
+            ))}
+          </div>
         )}
-        {secondaryImages.map((src, i) => (
-          <button
-            key={src}
-            className={styles.imageSecondary}
-            onClick={() => openLightbox(i + 1)}
-            aria-label={`Open image ${i + 2} fullscreen`}
-          >
-            <Image
-              src={src}
-              alt={`${title} ${i + 2}`}
-              fill
-              className={styles.img}
-              sizes="(max-width: 768px) 50vw, 30vw"
-            />
-            <span className={styles.fullscreenIcon} aria-hidden="true">
-              <FullscreenIcon />
-            </span>
-          </button>
-        ))}
+
       </div>
 
       {/* ── Lightbox ── */}

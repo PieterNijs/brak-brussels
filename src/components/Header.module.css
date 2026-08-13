@@ -44,7 +44,7 @@
   background-color: var(--text-primary);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 951px) {
   .logo {
     width: 160px;
   }

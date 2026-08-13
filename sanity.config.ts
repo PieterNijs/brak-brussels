@@ -19,8 +19,19 @@ export default defineConfig({
           .title('Content')
           .items([
             orderableDocumentListDeskItem({ type: 'product', S, context }),
+            S.divider(),
+            S.listItem()
+              .title('Site Settings')
+              .id('siteSettings')
+              .child(
+                S.document()
+                  .schemaType('siteSettings')
+                  .documentId('siteSettings')
+              ),
+            // Other document types (page, etc.) — excludes product and siteSettings
             ...S.documentTypeListItems().filter(
-              (listItem) => !['product'].includes(listItem.getId() as string)
+              (listItem) =>
+                !['product', 'siteSettings'].includes(listItem.getId() as string)
             ),
           ]),
     }),

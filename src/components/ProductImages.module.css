@@ -1,37 +1,36 @@
-/* ─── Image grid ─────────────────────────────────────────────────── */
+/* ─── Image container ────────────────────────────────────────────── */
 
-.imageGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.imageContainer {
+  display: flex;
+  flex-direction: column;
   gap: 1px;
 }
 
-@media (min-width: 769px) {
-  .imageGrid {
+@media (min-width: 951px) {
+  .imageContainer {
     flex: 1;
     min-width: 0;
   }
 }
 
-.imagePrimary {
-  grid-column: 1 / -1;
-  position: relative;
-  aspect-ratio: 3 / 4;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  display: block;
-  width: 100%;
+/* ─── Hero row (first 3 images) ──────────────────────────────────── */
+
+/* Mobile: big image full width, two small ones side by side below */
+.heroRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
-@media (min-width: 769px) {
-  .imagePrimary {
-    grid-column: auto;
+@media (min-width: 951px) {
+  /* Desktop: big left + side column right */
+  .heroRow {
+    flex-direction: row;
   }
 }
 
-.imageSecondary {
+/* Big image (left on desktop, full-width on mobile) */
+.heroMain {
   position: relative;
   aspect-ratio: 3 / 4;
   cursor: pointer;
@@ -40,7 +39,77 @@
   padding: 0;
   display: block;
   width: 100%;
+  overflow: hidden;
 }
+
+@media (min-width: 951px) {
+  .heroMain {
+    /* 3/5 of the row — keeps aspect-ratio: 3/4 to anchor row height */
+    flex: 3;
+    width: auto;
+  }
+}
+
+/* Side column: holds the two stacked small images */
+.heroSide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+@media (min-width: 951px) {
+  .heroSide {
+    /* 2/5 of the row — gives heroSmall a 1:1 ratio, minimising crop */
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+}
+
+/* Small images in the side column */
+.heroSmall {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 951px) {
+  .heroSmall {
+    /* Each takes half the side column height, matching the big image's total height */
+    flex: 1;
+    aspect-ratio: unset;
+    min-height: 0;
+  }
+}
+
+/* ─── Rest grid (images 4+): 2 per row ───────────────────────────── */
+
+.restGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.restImage {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ─── Shared image styles ─────────────────────────────────────────── */
 
 .img {
   object-fit: cover;
@@ -65,13 +134,14 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
-.imagePrimary:hover .fullscreenIcon,
-.imageSecondary:hover .fullscreenIcon {
+.heroMain:hover .fullscreenIcon,
+.heroSmall:hover .fullscreenIcon,
+.restImage:hover .fullscreenIcon {
   opacity: 1;
 }
 
 /* Always visible on touch devices */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
   .fullscreenIcon {
     opacity: 1;
   }
@@ -143,7 +213,7 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 951px) {
   .navBtn {
     display: flex;
     align-items: center;

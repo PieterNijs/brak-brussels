@@ -5,7 +5,7 @@
   flex-direction: column;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 951px) {
   .layout {
     flex-direction: row;
     align-items: flex-start;
@@ -19,9 +19,10 @@
   flex-direction: column;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 951px) {
   .info {
-    width: 450px;
+    /* 450px fixed up to 1440px, then scales at 31.25vw (same proportion) */
+    width: clamp(450px, 31.25vw, 900px);
     flex-shrink: 0;
     position: sticky;
     top: 0;
