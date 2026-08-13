@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PortableText } from 'next-sanity'
-import { client } from '@/lib/sanity'
+import { serverClient } from '@/lib/sanity.server'
 import { ProductImages } from '@/components/ProductImages'
 import styles from './page.module.css'
 
@@ -32,7 +32,7 @@ function toPlainText(blocks?: PortableTextBlock[] | null): string {
 }
 
 async function getProduct(slug: string): Promise<Product | null> {
-  return client.fetch(
+  return serverClient.fetch(
     `*[_type == "product" && slug.current == $slug][0] {
       _id,
       title,
@@ -50,7 +50,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 }
 
 export async function generateStaticParams() {
-  const slugs: { slug: string }[] = await client.fetch(
+  const slugs: { slug: string }[] = await serverClient.fetch(
     `*[_type == "product"]{ "slug": slug.current }`,
     {},
     { next: { revalidate: 3600 } }
@@ -78,6 +78,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/products/${slug}`,
+    },
     openGraph: {
       title,
       description,

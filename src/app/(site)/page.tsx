@@ -1,6 +1,13 @@
-import { client } from '@/lib/sanity'
+import type { Metadata } from 'next'
+import { serverClient } from '@/lib/sanity.server'
 import { ProductCard } from '@/components/ProductCard'
 import styles from './page.module.css'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+}
 
 type Product = {
   _id: string
@@ -12,7 +19,7 @@ type Product = {
 }
 
 async function getProducts(): Promise<Product[]> {
-  return client.fetch(
+  return serverClient.fetch(
     `*[_type == "product"] | order(orderRank) {
       _id,
       title,

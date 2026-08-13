@@ -1,18 +1,19 @@
 import type { MetadataRoute } from 'next'
-import { client } from '@/lib/sanity'
+import { serverClient } from '@/lib/sanity.server'
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://brakbrussels.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs: { slug: string }[] = await client.fetch(
-    `*[_type == "product"]{ "slug": slug.current }`,
+  const products: { slug: string; updatedAt: string }[] = await serverClient.fetch(
+    `*[_type == "product"]{ "slug": slug.current, "updatedAt": _updatedAt }`,
     {},
     { next: { revalidate: 3600 } }
   )
 
-  const productUrls: MetadataRoute.Sitemap = slugs.map(({ slug }) => ({
+  const productUrls: MetadataRoute.Sitemap = products.map(({ slug, updatedAt }) => ({
     url: `${BASE_URL}/products/${slug}`,
+    lastModified: updatedAt,
     changeFrequency: 'monthly',
     priority: 0.8,
   }))

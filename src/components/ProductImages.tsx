@@ -47,6 +47,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [zoomed, setZoomed] = useState(false)
   const [origin, setOrigin] = useState({ x: 50, y: 50 })
+  const [imgNaturalSize, setImgNaturalSize] = useState<{ w: number; h: number } | null>(null)
 
   const touchStartX = useRef(0)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
@@ -67,6 +68,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   useEffect(() => {
     setZoomed(false)
     setOrigin({ x: 50, y: 50 })
+    setImgNaturalSize(null)
   }, [activeIndex, lightboxOpen])
 
   // Keyboard navigation + body scroll lock
@@ -103,8 +105,28 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   }
 
   const handleImageClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setZoomed((z) => !z)
+    if (!imageWrapperRef.current || !imgNaturalSize) return
+    const rect = imageWrapperRef.current.getBoundingClientRect()
+    const clickX = e.clientX - rect.left
+    const clickY = e.clientY - rect.top
+    const containerAspect = rect.width / rect.height
+    const imgAspect = imgNaturalSize.w / imgNaturalSize.h
+    let renderedW: number, renderedH: number, offsetX: number, offsetY: number
+    if (containerAspect > imgAspect) {
+      renderedH = rect.height; renderedW = rect.height * imgAspect
+      offsetX = (rect.width - renderedW) / 2; offsetY = 0
+    } else {
+      renderedW = rect.width; renderedH = rect.width / imgAspect
+      offsetX = 0; offsetY = (rect.height - renderedH) / 2
+    }
+    if (
+      clickX >= offsetX && clickX <= offsetX + renderedW &&
+      clickY >= offsetY && clickY <= offsetY + renderedH
+    ) {
+      e.stopPropagation() // prevent overlay from closing the lightbox
+      setZoomed((z) => !z)
+    }
+    // clicks in the letterbox area bubble up to the overlay → closeLightbox
   }
 
   // Touch pan while zoomed
@@ -252,6 +274,10 @@ export function ProductImages({ images, title }: ProductImagesProps) {
               fill
               className={styles.lightboxImg}
               sizes="100vw"
+              onLoad={(e) => {
+                const img = e.target as HTMLImageElement
+                setImgNaturalSize({ w: img.naturalWidth, h: img.naturalHeight })
+              }}
             />
           </div>
 

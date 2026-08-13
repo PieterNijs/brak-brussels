@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Jost } from 'next/font/google'
-import { client } from '@/lib/sanity'
+import { serverClient } from '@/lib/sanity.server'
 import './globals.css'
 
 const jost = Jost({
@@ -16,14 +16,14 @@ type SiteSettings = {
 }
 
 async function getSiteSettings(): Promise<SiteSettings> {
-  const result = await client.fetch(
+  const result = await serverClient.fetch(
     `*[_type == "siteSettings"][0] {
       siteName,
       siteDescription,
       "ogImageUrl": ogImage.asset->url
     }`,
     {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 300 } } // 5 minutes — fresh enough without hammering the API
   )
   return result ?? {}
 }
@@ -32,6 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
   const siteName = settings.siteName || 'Brak Brussels'
   const description = settings.siteDescription || 'Design furniture from Brussels.'
+  const ogImage = settings.ogImageUrl
 
   return {
     metadataBase: new URL(
@@ -46,19 +47,17 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName,
       type: 'website',
       locale: 'en_US',
-      ...(settings.ogImageUrl && {
-        images: [
-          {
-            url: settings.ogImageUrl,
-            width: 1200,
-            height: 630,
-            alt: siteName,
-          },
-        ],
+      title: siteName,
+      description,
+      ...(ogImage && {
+        images: [{ url: ogImage, width: 1200, height: 630, alt: siteName }],
       }),
     },
     twitter: {
       card: 'summary_large_image',
+      title: siteName,
+      description,
+      ...(ogImage && { images: [ogImage] }),
     },
   }
 }
