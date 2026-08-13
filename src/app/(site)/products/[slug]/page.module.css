@@ -114,7 +114,7 @@
 }
 
 .ctaBox {
-  background-color: var(--background-surface);
+  background-color: var(--background-primary);
   padding: var(--space-xl) var(--space-lg);
 }
 

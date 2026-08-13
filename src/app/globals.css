@@ -9,7 +9,7 @@
 }
 
 html {
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
   color: var(--text-primary);
   font-family: 'Jost', sans-serif;
   font-size: var(--type-body-font-size);
@@ -26,7 +26,7 @@ body {
 .header-spacer {
   height: 141px;
   flex-shrink: 0;
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
 }
 
 @media (max-width: 768px) {
