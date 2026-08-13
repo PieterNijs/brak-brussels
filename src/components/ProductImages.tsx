@@ -9,6 +9,44 @@ type ProductImagesProps = {
   title: string
 }
 
+const ZOOM_SCALE = 2.5
+
+// Returns the rendered image bounds within the wrapper (accounts for object-fit: contain letterboxing)
+function getRenderedBounds(
+  rect: DOMRect,
+  naturalSize: { w: number; h: number }
+) {
+  const ca = rect.width / rect.height
+  const ia = naturalSize.w / naturalSize.h
+  let rW: number, rH: number, oX: number, oY: number
+  if (ca > ia) {
+    rH = rect.height; rW = rect.height * ia; oX = (rect.width - rW) / 2; oY = 0
+  } else {
+    rW = rect.width; rH = rect.width / ia; oX = 0; oY = (rect.height - rH) / 2
+  }
+  return { rW, rH, oX, oY }
+}
+
+// Clamps the pan origin (px) so the zoomed image always covers the viewport — no black bars
+function clampOrigin(
+  xPx: number,
+  yPx: number,
+  rect: DOMRect,
+  { rW, rH, oX, oY }: { rW: number; rH: number; oX: number; oY: number }
+): { x: number; y: number } {
+  const S = ZOOM_SCALE
+  const oxMin = (oX * S) / (S - 1)
+  const oxMax = ((oX + rW) * S - rect.width) / (S - 1)
+  const oyMin = (oY * S) / (S - 1)
+  const oyMax = ((oY + rH) * S - rect.height) / (S - 1)
+
+  // If the valid range inverts (image is smaller than viewport even when zoomed), centre it
+  const cx = oxMin <= oxMax ? Math.min(Math.max(xPx, oxMin), oxMax) : rect.width / 2
+  const cy = oyMin <= oyMax ? Math.min(Math.max(yPx, oyMin), oyMax) : rect.height / 2
+
+  return { x: (cx / rect.width) * 100, y: (cy / rect.height) * 100 }
+}
+
 function FullscreenIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -48,6 +86,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
   const [zoomed, setZoomed] = useState(false)
   const [origin, setOrigin] = useState({ x: 50, y: 50 })
   const [imgNaturalSize, setImgNaturalSize] = useState<{ w: number; h: number } | null>(null)
+  const [isOverImage, setIsOverImage] = useState(false)
 
   const touchStartX = useRef(0)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
@@ -64,11 +103,12 @@ export function ProductImages({ images, title }: ProductImagesProps) {
     setZoomed(false)
   }
 
-  // Reset zoom whenever the active image changes or lightbox closes
+  // Reset state whenever the active image changes or lightbox closes
   useEffect(() => {
     setZoomed(false)
     setOrigin({ x: 50, y: 50 })
     setImgNaturalSize(null)
+    setIsOverImage(false)
   }, [activeIndex, lightboxOpen])
 
   // Keyboard navigation + body scroll lock
@@ -94,49 +134,66 @@ export function ProductImages({ images, title }: ProductImagesProps) {
     }
   }, [lightboxOpen, zoomed, images.length])
 
-  // Mouse tracking for zoom origin / pan
+  // Mouse tracking: update isOverImage, set pan origin (clamped when zoomed)
   const handleImageMouseMove = (e: React.MouseEvent) => {
     if (!imageWrapperRef.current) return
     const rect = imageWrapperRef.current.getBoundingClientRect()
-    setOrigin({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    })
+    const xPx = e.clientX - rect.left
+    const yPx = e.clientY - rect.top
+
+    if (imgNaturalSize) {
+      const bounds = getRenderedBounds(rect, imgNaturalSize)
+      const over =
+        xPx >= bounds.oX && xPx <= bounds.oX + bounds.rW &&
+        yPx >= bounds.oY && yPx <= bounds.oY + bounds.rH
+      setIsOverImage(over)
+
+      if (zoomed) {
+        setOrigin(clampOrigin(xPx, yPx, rect, bounds))
+      } else {
+        setOrigin({ x: (xPx / rect.width) * 100, y: (yPx / rect.height) * 100 })
+      }
+    } else {
+      setIsOverImage(false)
+      setOrigin({ x: (xPx / rect.width) * 100, y: (yPx / rect.height) * 100 })
+    }
   }
 
+  const handleMouseLeave = () => setIsOverImage(false)
+
+  // Click on image → zoom; click on letterbox → close (bubbles to overlay)
   const handleImageClick = (e: React.MouseEvent) => {
     if (!imageWrapperRef.current || !imgNaturalSize) return
     const rect = imageWrapperRef.current.getBoundingClientRect()
     const clickX = e.clientX - rect.left
     const clickY = e.clientY - rect.top
-    const containerAspect = rect.width / rect.height
-    const imgAspect = imgNaturalSize.w / imgNaturalSize.h
-    let renderedW: number, renderedH: number, offsetX: number, offsetY: number
-    if (containerAspect > imgAspect) {
-      renderedH = rect.height; renderedW = rect.height * imgAspect
-      offsetX = (rect.width - renderedW) / 2; offsetY = 0
-    } else {
-      renderedW = rect.width; renderedH = rect.width / imgAspect
-      offsetX = 0; offsetY = (rect.height - renderedH) / 2
-    }
+    const bounds = getRenderedBounds(rect, imgNaturalSize)
+
     if (
-      clickX >= offsetX && clickX <= offsetX + renderedW &&
-      clickY >= offsetY && clickY <= offsetY + renderedH
+      clickX >= bounds.oX && clickX <= bounds.oX + bounds.rW &&
+      clickY >= bounds.oY && clickY <= bounds.oY + bounds.rH
     ) {
-      e.stopPropagation() // prevent overlay from closing the lightbox
+      e.stopPropagation()
+      // When zooming in, clamp origin immediately so no black bars flash on first render
+      if (!zoomed) {
+        setOrigin(clampOrigin(clickX, clickY, rect, bounds))
+      }
       setZoomed((z) => !z)
     }
-    // clicks in the letterbox area bubble up to the overlay → closeLightbox
   }
 
-  // Touch pan while zoomed
+  // Touch pan while zoomed — clamp to image bounds
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!zoomed || !imageWrapperRef.current) return
     const rect = imageWrapperRef.current.getBoundingClientRect()
-    setOrigin({
-      x: ((e.touches[0].clientX - rect.left) / rect.width) * 100,
-      y: ((e.touches[0].clientY - rect.top) / rect.height) * 100,
-    })
+    const xPx = e.touches[0].clientX - rect.left
+    const yPx = e.touches[0].clientY - rect.top
+
+    if (imgNaturalSize) {
+      setOrigin(clampOrigin(xPx, yPx, rect, getRenderedBounds(rect, imgNaturalSize)))
+    } else {
+      setOrigin({ x: (xPx / rect.width) * 100, y: (yPx / rect.height) * 100 })
+    }
   }
 
   // Swipe to navigate — only when not zoomed
@@ -252,19 +309,21 @@ export function ProductImages({ images, title }: ProductImagesProps) {
       {/* ── Lightbox ── */}
       {lightboxOpen && (
         <div className={styles.overlay} onClick={closeLightbox}>
-          {/* Image */}
+          {/* Image wrapper — handles zoom and pan */}
           <div
             ref={imageWrapperRef}
             className={styles.lightboxImageWrapper}
             onClick={handleImageClick}
             onMouseMove={handleImageMouseMove}
+            onMouseLeave={handleMouseLeave}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             style={{
-              transform: zoomed ? 'scale(2.5)' : 'scale(1)',
+              transform: zoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
               transformOrigin: `${origin.x}% ${origin.y}%`,
-              cursor: zoomed ? 'zoom-out' : 'zoom-in',
+              // Show zoom cursor only when hovering the actual image, not the letterbox
+              cursor: isOverImage ? (zoomed ? 'zoom-out' : 'zoom-in') : 'default',
               touchAction: zoomed ? 'none' : 'auto',
             }}
           >
