@@ -177,10 +177,11 @@ export default async function ProductPage({
           <div className={styles.ctaWrapper}>
             <div className={styles.ctaBox}>
               <p className={styles.ctaText}>
-                If you have any questions regarding our shipping fees?{' '}
+                Are you interested in buying this product or do you have any inquiries?{' '}
                 <a href="mailto:info@brakbrussels.com" className={styles.ctaLink}>
                   Drop us an email
                 </a>
+                !
               </p>
             </div>
           </div>
