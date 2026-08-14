@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './ProductCard.module.css'
+import { sanityLoader } from '@/lib/sanity.image'
 
 type ProductCardProps = {
   title: string
@@ -60,6 +61,7 @@ export function ProductCard({
             src={src}
             alt={i === 0 ? title : ''}
             fill
+            loader={sanityLoader}
             className={styles.image}
             style={{
               opacity: i === currentIndex ? 1 : 0,

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import styles from './ProductImages.module.css'
+import { sanityLoader } from '@/lib/sanity.image'
 
 type ProductImagesProps = {
   images: string[]
@@ -228,6 +229,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
                 src={img0}
                 alt={title}
                 fill
+                loader={sanityLoader}
                 className={styles.img}
                 sizes="(max-width: 768px) 100vw, 45vw"
                 priority
@@ -249,6 +251,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
                     src={img1}
                     alt={`${title} 2`}
                     fill
+                    loader={sanityLoader}
                     className={styles.img}
                     sizes="(max-width: 768px) 50vw, 22vw"
                   />
@@ -267,6 +270,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
                     src={img2}
                     alt={`${title} 3`}
                     fill
+                    loader={sanityLoader}
                     className={styles.img}
                     sizes="(max-width: 768px) 50vw, 22vw"
                   />
@@ -293,6 +297,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
                   src={src}
                   alt={`${title} ${i + 4}`}
                   fill
+                  loader={sanityLoader}
                   className={styles.img}
                   sizes="(max-width: 768px) 50vw, 30vw"
                 />
@@ -331,6 +336,7 @@ export function ProductImages({ images, title }: ProductImagesProps) {
               src={images[activeIndex]}
               alt={`${title} ${activeIndex + 1}`}
               fill
+              loader={sanityLoader}
               className={styles.lightboxImg}
               sizes="100vw"
               onLoad={(e) => {
