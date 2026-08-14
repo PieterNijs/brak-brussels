@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Trash } from '@sanity/icons'
 import { useClient, useDocumentOperation, useEditState } from 'sanity'
 import type { DocumentActionProps } from 'sanity'
 
@@ -32,7 +31,6 @@ export function DeleteWithImagesAction(props: DocumentActionProps) {
 
   return {
     label: 'Delete with images',
-    icon: Trash,
     tone: 'critical' as const,
     disabled: isDeleting || !doc,
     onHandle: () => setConfirming(true),
