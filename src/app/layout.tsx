@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Jost } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import { serverClient } from '@/lib/sanity.server'
 import './globals.css'
 
@@ -70,6 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={jost.variable}>
       <body>{children}</body>
+      <Analytics />
     </html>
   )
 }
