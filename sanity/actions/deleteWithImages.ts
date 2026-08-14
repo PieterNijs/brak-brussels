@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useClient, useDocumentOperation, useEditState } from 'sanity'
+import { useClient, useEditState } from 'sanity'
 import type { DocumentActionProps } from 'sanity'
 
 type ImageField = {
@@ -8,7 +8,6 @@ type ImageField = {
 
 export function DeleteWithImagesAction(props: DocumentActionProps) {
   const { id, type, onComplete } = props
-  const { delete: deleteOp } = useDocumentOperation(id, type)
   const { published, draft } = useEditState(id, type)
   const client = useClient({ apiVersion: '2024-01-01' })
 
@@ -50,16 +49,23 @@ export function DeleteWithImagesAction(props: DocumentActionProps) {
             setIsDeleting(true)
             setConfirming(false)
             try {
-              // Delete all image assets first
+              // Delete the document (both published and draft) first so
+              // references to the image assets are gone before we delete them.
+              const docTx = client.transaction()
+              docTx.delete(id)
+              docTx.delete(`drafts.${id}`)
+              await docTx.commit()
+
+              // Now delete the image assets — no references remain.
               if (assetIds.length > 0) {
-                const tx = client.transaction()
+                const assetTx = client.transaction()
                 for (const assetId of assetIds) {
-                  tx.delete(assetId)
+                  assetTx.delete(assetId)
                 }
-                await tx.commit()
+                await assetTx.commit()
               }
-              // Then delete the product document
-              deleteOp.execute()
+            } catch (err) {
+              console.error('Delete with images failed:', err)
             } finally {
               onComplete()
             }

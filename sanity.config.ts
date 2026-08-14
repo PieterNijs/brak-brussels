@@ -42,12 +42,10 @@ export default defineConfig({
   ],
 
   document: {
-    // Replace the built-in delete action with our custom one for products only
+    // Add our custom action alongside the built-in delete for products only
     actions: (prev, context) => {
       if (context.schemaType !== 'product') return prev
-      return prev.map((action) =>
-        action.action === 'delete' ? DeleteWithImagesAction : action
-      )
+      return [...prev, DeleteWithImagesAction]
     },
   },
 
