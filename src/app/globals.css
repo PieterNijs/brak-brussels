@@ -9,6 +9,7 @@
 }
 
 html {
+  --header-offset: 141px; /* updated by Header.tsx on scroll */
   background-color: var(--background-primary);
   color: var(--text-primary);
   font-family: 'Jost', sans-serif;

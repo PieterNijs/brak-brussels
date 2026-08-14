@@ -25,9 +25,10 @@
     width: clamp(450px, 31.25vw, 900px);
     flex-shrink: 0;
     position: sticky;
-    top: 0;
-    max-height: 100vh;
+    top: var(--header-offset, 141px);
+    max-height: calc(100vh - var(--header-offset, 141px));
     overflow-y: auto;
+    transition: top 0.3s ease-out, max-height 0.3s ease-out;
   }
 }
 

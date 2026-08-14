@@ -13,6 +13,14 @@ export function Header() {
 
   const closeNav = useCallback(() => setNavOpen(false), [])
 
+  // Keep --header-offset in sync so sticky elements can sit just below the header
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--header-offset',
+      visible ? '141px' : '0px'
+    )
+  }, [visible])
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
