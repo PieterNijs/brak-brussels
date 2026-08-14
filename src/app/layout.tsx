@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Jost } from 'next/font/google'
 import { serverClient } from '@/lib/sanity.server'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 const jost = Jost({
@@ -69,7 +70,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={jost.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   )
 }
