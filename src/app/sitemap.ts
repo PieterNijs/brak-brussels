@@ -6,7 +6,7 @@ const BASE_URL =
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products: { slug: string; updatedAt: string }[] = await serverClient.fetch(
-    `*[_type == "product"]{ "slug": slug.current, "updatedAt": _updatedAt }`,
+    `*[_type == "product" && !(_id in path("drafts.**"))]{ "slug": slug.current, "updatedAt": _updatedAt }`,
     {},
     { next: { revalidate: 3600 } }
   )

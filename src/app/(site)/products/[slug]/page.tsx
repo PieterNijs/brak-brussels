@@ -33,7 +33,7 @@ function toPlainText(blocks?: PortableTextBlock[] | null): string {
 
 async function getProduct(slug: string): Promise<Product | null> {
   return serverClient.fetch(
-    `*[_type == "product" && slug.current == $slug][0] {
+    `*[_type == "product" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
       _id,
       title,
       slug,
@@ -51,7 +51,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 
 export async function generateStaticParams() {
   const slugs: { slug: string }[] = await serverClient.fetch(
-    `*[_type == "product"]{ "slug": slug.current }`,
+    `*[_type == "product" && !(_id in path("drafts.**"))]{ "slug": slug.current }`,
     {},
     { next: { revalidate: 3600 } }
   )

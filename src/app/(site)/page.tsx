@@ -20,7 +20,7 @@ type Product = {
 
 async function getProducts(): Promise<Product[]> {
   return serverClient.fetch(
-    `*[_type == "product"] | order(orderRank) {
+    `*[_type == "product" && !(_id in path("drafts.**"))] | order(orderRank) {
       _id,
       title,
       slug,
